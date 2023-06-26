@@ -21,8 +21,10 @@ body {
   > header {
     display: flex;
     justify-content: space-between;
-    padding: 8px 16px;
+    padding-inline: 16px;
+    height: 64px;
     align-items: center;
+    flex-shrink: 0;
 
     > .logo {
       display: flex;
@@ -37,30 +39,39 @@ body {
     }
 
     & a {
-      color: black;
+      color: #141b2c;
       text-decoration: none;
     }
 
     & nav {
       display: flex;
+      align-self: stretch;
 
       > a {
-        width: 96px;
-        height: 36px;
+        width: 128px;
         display: flex;
+        /* flex-direction: column; */
         align-items: center;
         justify-content: center;
+        gap: 4px;
+        box-sizing: border-box;
+        /* font-size: small; */
+        border: 4px solid transparent;
+
+        &:hover {
+          background-color: #005ac211;
+        }
 
         &.active {
           color: #005ac2;
           border-bottom: 4px solid #005ac2;
-          font-weight: bold;
         }
       }
     }
   }
 
   & .products {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -69,9 +80,9 @@ body {
 
     > header {
       display: flex;
-      padding: 16px;
+      padding: 16px 32px;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: space-between;
       background-color: #005ac211;
       border-radius: 24px;
 
@@ -96,13 +107,12 @@ body {
     }
 
     > main {
-      display: flex;
-      gap: 8px;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      flex-grow: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
 
       > .product {
-        width: 256px;
         display: flex;
         flex-direction: column;
         border-radius: 24px;
@@ -216,7 +226,7 @@ body {
     gap: 16px;
     padding: 32px;
     border-radius: 24px;
-    box-shadow: 0 0 16px #0008;
+    box-shadow: 0 0 16px #0004;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

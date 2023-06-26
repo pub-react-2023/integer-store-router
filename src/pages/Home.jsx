@@ -147,21 +147,23 @@ export default function Home() {
         </section>
       </header>
       <main>
-        {filteredSortedProducts
-          .filter((_product, i) => i < 4 * page && i >= 4 * page - 4)
-          .map((product) => (
-            <Product
-              key={product.id}
-              {...product}
-              setEditedProduct={setEditedProduct}
-            />
-          ))}
+        {filteredSortedProducts.length > 0
+          ? filteredSortedProducts
+              .filter((_product, i) => i >= 4 * page - 4 && i < 4 * page)
+              .map((product) => (
+                <Product
+                  key={product.id}
+                  {...product}
+                  setEditedProduct={setEditedProduct}
+                />
+              ))
+          : "Tidak ada produk ditemukan."}
       </main>
       <footer>
         <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
           Sebelumnya
         </Button>
-        {products
+        {filteredSortedProducts
           .filter((_product, i) => i % 4 === 0)
           .map((_product, i) => (
             <button
@@ -177,7 +179,7 @@ export default function Home() {
           onClick={() => setPage(page + 1)}
           disabled={page === Math.ceil(filteredSortedProducts.length / 4)}
         >
-          Selanjutnya
+          Berikutnya
         </Button>
       </footer>
       {editedProduct && (
