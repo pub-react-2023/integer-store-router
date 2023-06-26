@@ -1,4 +1,4 @@
-export default function Product({ name, image, price }) {
+export default function Product({ id, name, image, price, setEditedProduct }) {
   return (
     <div className="product">
       <img src={image} alt={name} />
@@ -8,8 +8,21 @@ export default function Product({ name, image, price }) {
           {price.toLocaleString("id-ID", {
             style: "currency",
             currency: "IDR",
+            maximumFractionDigits: 0,
           })}
         </p>
+        <button
+          onClick={() =>
+            setEditedProduct({
+              id,
+              name,
+              image,
+              price,
+            })
+          }
+        >
+          Edit
+        </button>
         <button>Beli</button>
       </section>
     </div>

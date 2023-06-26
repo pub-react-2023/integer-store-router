@@ -1,88 +1,88 @@
 import { useState } from "react";
 import Product from "../components/Product";
 
-const products = [
-  {
-    id: 1,
-    name: "MacBook Air 15”",
-    image: "/macbook_air_15.jpg",
-    price: 26999999,
-  },
-  {
-    id: 2,
-    name: "iPhone 14 Pro",
-    image: "/iphone_14_pro.jpg",
-    price: 19999999,
-  },
-  {
-    id: 3,
-    name: "iPhone 14",
-    image: "/iphone_14.jpg",
-    price: 15999999,
-  },
-  {
-    id: 4,
-    name: "Apple Vision Pro",
-    image: "/apple_vision_pro.jpg",
-    price: 66999999,
-  },
-  {
-    id: 5,
-    name: "Apple Watch Series 8",
-    image: "apple_watch_series_8.jpg",
-    price: 7999999,
-  },
-  {
-    id: 6,
-    name: "iPad Pro",
-    image: "/ipad_pro.jpg",
-    price: 15999999,
-  },
-  {
-    id: 7,
-    name: "MacBook Air 15”",
-    image: "/macbook_air_15.jpg",
-    price: 26999999,
-  },
-  {
-    id: 8,
-    name: "iPhone 14 Pro",
-    image: "/iphone_14_pro.jpg",
-    price: 19999999,
-  },
-  {
-    id: 9,
-    name: "iPhone 14",
-    image: "/iphone_14.jpg",
-    price: 15999999,
-  },
-  {
-    id: 10,
-    name: "Apple Vision Pro",
-    image: "/apple_vision_pro.jpg",
-    price: 66999999,
-  },
-  {
-    id: 11,
-    name: "Apple Watch Series 8",
-    image: "apple_watch_series_8.jpg",
-    price: 7999999,
-  },
-  {
-    id: 12,
-    name: "iPad Pro",
-    image: "/ipad_pro.jpg",
-    price: 15999999,
-  },
-];
-
 export default function Home() {
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: "MacBook Air 15”",
+      image: "/macbook_air_15.jpg",
+      price: 26999999,
+    },
+    {
+      id: 2,
+      name: "iPhone 14 Pro",
+      image: "/iphone_14_pro.jpg",
+      price: 19999999,
+    },
+    {
+      id: 3,
+      name: "iPhone 14",
+      image: "/iphone_14.jpg",
+      price: 15999999,
+    },
+    {
+      id: 4,
+      name: "Apple Vision Pro",
+      image: "/apple_vision_pro.jpg",
+      price: 66999999,
+    },
+    {
+      id: 5,
+      name: "Apple Watch Series 8",
+      image: "apple_watch_series_8.jpg",
+      price: 7999999,
+    },
+    {
+      id: 6,
+      name: "iPad Pro",
+      image: "/ipad_pro.jpg",
+      price: 15999999,
+    },
+    {
+      id: 7,
+      name: "MacBook Air 15”",
+      image: "/macbook_air_15.jpg",
+      price: 26999999,
+    },
+    {
+      id: 8,
+      name: "iPhone 14 Pro",
+      image: "/iphone_14_pro.jpg",
+      price: 19999999,
+    },
+    {
+      id: 9,
+      name: "iPhone 14",
+      image: "/iphone_14.jpg",
+      price: 15999999,
+    },
+    {
+      id: 10,
+      name: "Apple Vision Pro",
+      image: "/apple_vision_pro.jpg",
+      price: 66999999,
+    },
+    {
+      id: 11,
+      name: "Apple Watch Series 8",
+      image: "apple_watch_series_8.jpg",
+      price: 7999999,
+    },
+    {
+      id: 12,
+      name: "iPad Pro",
+      image: "/ipad_pro.jpg",
+      price: 15999999,
+    },
+  ]);
   const [keyword, setKeyword] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(Infinity);
   const [sortBy, setSortBy] = useState("id");
   const [sortOrder, setSortOrder] = useState("asc");
   const [page, setPage] = useState(1);
+  const [editedProduct, setEditedProduct] = useState();
 
   const filteredSortedProducts = products
     .toSorted((a, b) => {
@@ -149,14 +149,28 @@ export default function Home() {
         {filteredSortedProducts
           .filter((_product, i) => i < 4 * page && i >= 4 * page - 4)
           .map((product) => (
-            <Product key={product.id} {...product} />
+            <Product
+              key={product.id}
+              {...product}
+              setEditedProduct={setEditedProduct}
+            />
           ))}
       </main>
       <footer>
         <button onClick={() => setPage(page - 1)} disabled={page === 1}>
           Sebelumnya
         </button>
-        <div>{page}</div>
+        {products
+          .filter((_product, i) => i % 4 === 0)
+          .map((_product, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              disabled={i + 1 === page}
+            >
+              {i + 1}
+            </button>
+          ))}
         <button
           onClick={() => setPage(page + 1)}
           disabled={page === Math.round(filteredSortedProducts.length / 4)}
@@ -164,6 +178,51 @@ export default function Home() {
           Selanjutnya
         </button>
       </footer>
+      {editedProduct && (
+        <form
+          className="dialog"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setProducts(
+              products.map((product) =>
+                product.id === editedProduct.id ? editedProduct : product
+              )
+            );
+            setEditedProduct(undefined);
+          }}
+        >
+          <h1>Edit Produk</h1>
+          <label>
+            Nama
+            <input
+              type="text"
+              value={editedProduct.name}
+              onChange={(e) =>
+                setEditedProduct({ ...editedProduct, name: e.target.value })
+              }
+            />
+          </label>
+          <label>
+            Harga
+            <input
+              type="number"
+              value={editedProduct.price}
+              onChange={(e) =>
+                setEditedProduct({
+                  ...editedProduct,
+                  price: parseInt(e.target.value),
+                })
+              }
+            />
+          </label>
+          <div>
+            <button type="reset" onClick={() => setEditedProduct(undefined)}>
+              Batal
+            </button>
+            <button>Simpan</button>
+          </div>
+        </form>
+      )}
     </div>
   );
 }
