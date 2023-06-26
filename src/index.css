@@ -22,8 +22,6 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 8px 16px;
-    background-color: #448;
-    color: white;
     align-items: center;
 
     > .logo {
@@ -32,10 +30,14 @@ body {
       align-items: center;
       font-size: large;
       font-weight: bold;
+
+      & svg {
+        color: #005ac2;
+      }
     }
 
     & a {
-      color: white;
+      color: black;
       text-decoration: none;
     }
 
@@ -43,15 +45,16 @@ body {
       display: flex;
 
       > a {
-        padding-inline: 16px;
-        height: 32px;
-        border-radius: 16px;
+        width: 96px;
+        height: 36px;
         display: flex;
         align-items: center;
+        justify-content: center;
 
         &.active {
-          background-color: white;
-          color: #44b;
+          color: #005ac2;
+          border-bottom: 4px solid #005ac2;
+          font-weight: bold;
         }
       }
     }
@@ -61,26 +64,27 @@ body {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-
-    > * {
-      display: flex;
-      padding: 8px;
-      align-items: center;
-      justify-content: space-evenly;
-    }
+    gap: 24px;
+    padding: 16px 32px;
 
     > header {
-      border-bottom: 1px solid #888;
+      display: flex;
+      padding: 16px;
+      align-items: center;
+      justify-content: space-evenly;
+      background-color: #005ac211;
+      border-radius: 24px;
 
       > * {
         display: flex;
-        gap: 8px;
+        gap: 16px;
         align-items: center;
       }
 
       > section > label {
         display: flex;
         flex-direction: column;
+        gap: 4px;
         font-size: small;
       }
 
@@ -94,7 +98,7 @@ body {
     > main {
       display: flex;
       gap: 8px;
-      padding: 16px;
+      justify-content: space-between;
       flex-wrap: wrap;
 
       > .product {
@@ -107,7 +111,7 @@ body {
           max-width: 100%;
           border-top-left-radius: 24px;
           border-top-right-radius: 24px;
-          border: solid #ddd;
+          border: solid #005ac211;
           border-width: 4px 4px 0 4px;
         }
 
@@ -116,7 +120,7 @@ body {
           flex-direction: column;
           gap: 8px;
           padding: 16px;
-          background-color: #ddd;
+          background-color: #005ac211;
           border-bottom-left-radius: 24px;
           border-bottom-right-radius: 24px;
 
@@ -128,22 +132,40 @@ body {
             color: #444;
           }
 
-          > button {
-            align-self: flex-end;
+          > div {
+            display: flex;
+            justify-content: space-between;
           }
         }
       }
     }
 
-    > footer > div {
-      width: 36px;
-      height: 36px;
-      border-radius: 100%;
-      border: 1px solid #44b;
-      color: #44b;
+    > footer {
       display: flex;
-      align-items: center;
       justify-content: center;
+      gap: 16px;
+
+      & .page-number {
+        background-color: transparent;
+        width: 36px;
+        height: 36px;
+        border-radius: 100%;
+        border: 1px solid #005ac2;
+        color: #005ac2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #005ac222;
+        }
+
+        &:disabled {
+          background-color: #005ac2;
+          color: white;
+        }
+      }
     }
   }
 
@@ -152,23 +174,35 @@ body {
     text-align: center;
   }
 
-  & button {
-    background-color: #44b;
-    color: white;
-    height: 36px;
-    padding-inline: 18px;
-    border-radius: 18px;
+  & .button {
+    height: 40px;
+    padding-inline: 24px;
+    border-radius: 24px;
     border: none;
     cursor: pointer;
     min-width: 96px;
     font-weight: bold;
 
-    &:hover {
-      background-color: #66d;
+    &.button-filled {
+      background-color: #005ac2;
+      color: white;
+
+      &:hover {
+        background-color: #005ac2ee;
+      }
+    }
+
+    &.button-tonal {
+      background-color: #005ac222;
+      color: #141b2c;
+
+      &:hover {
+        background-color: #005ac233;
+      }
     }
 
     &:disabled {
-      background-color: #44b4;
+      background-color: #005ac222 !important;
       cursor: not-allowed;
     }
   }
@@ -176,14 +210,40 @@ body {
   & .dialog {
     position: absolute;
     background-color: white;
+    background-image: linear-gradient(#005ac211, #005ac211);
     display: flex;
     flex-direction: column;
     gap: 16px;
     padding: 32px;
     border-radius: 24px;
-    box-shadow: 0 0 16px #000;
+    box-shadow: 0 0 16px #0008;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    min-width: 25%;
+
+    > label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      > input {
+        padding: 0;
+        height: 56px;
+        padding-inline: 16px;
+        font-size: medium;
+      }
+    }
+  }
+
+  & input,
+  select {
+    border: 1px solid #75777f;
+    border-radius: 4px;
+    outline-color: #005ac2;
+  }
+
+  & div:last-child:has(> button) {
+    margin-top: 8px;
   }
 }

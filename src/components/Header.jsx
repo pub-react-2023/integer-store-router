@@ -1,5 +1,6 @@
 import { GiGalaxy } from "react-icons/gi";
 import { Link, NavLink } from "react-router-dom";
+import Button from "./Button";
 
 export default function Header() {
   return (
@@ -13,7 +14,7 @@ export default function Header() {
         <NavLink to="/about">Tentang</NavLink>
         <NavLink to="/contact">Kontak</NavLink>
       </nav>
-      <button>Login</button>
+      <Button>Login</Button>
     </header>
   );
 }

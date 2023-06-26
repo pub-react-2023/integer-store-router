@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Product from "../components/Product";
+import Button from "../components/Button";
 
 export default function Home() {
   const [products, setProducts] = useState([
@@ -157,26 +158,27 @@ export default function Home() {
           ))}
       </main>
       <footer>
-        <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+        <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
           Sebelumnya
-        </button>
+        </Button>
         {products
           .filter((_product, i) => i % 4 === 0)
           .map((_product, i) => (
             <button
               key={i}
+              className="page-number"
               onClick={() => setPage(i + 1)}
               disabled={i + 1 === page}
             >
               {i + 1}
             </button>
           ))}
-        <button
+        <Button
           onClick={() => setPage(page + 1)}
-          disabled={page === Math.round(filteredSortedProducts.length / 4)}
+          disabled={page === Math.ceil(filteredSortedProducts.length / 4)}
         >
           Selanjutnya
-        </button>
+        </Button>
       </footer>
       {editedProduct && (
         <form
@@ -200,6 +202,7 @@ export default function Home() {
               onChange={(e) =>
                 setEditedProduct({ ...editedProduct, name: e.target.value })
               }
+              autoFocus
             />
           </label>
           <label>
@@ -215,11 +218,15 @@ export default function Home() {
               }
             />
           </label>
-          <div>
-            <button type="reset" onClick={() => setEditedProduct(undefined)}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Button
+              type="reset"
+              variant="tonal"
+              onClick={() => setEditedProduct(undefined)}
+            >
               Batal
-            </button>
-            <button>Simpan</button>
+            </Button>
+            <Button>Simpan</Button>
           </div>
         </form>
       )}

@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 export default function Product({ id, name, image, price, setEditedProduct }) {
   return (
     <div className="product">
@@ -11,19 +13,22 @@ export default function Product({ id, name, image, price, setEditedProduct }) {
             maximumFractionDigits: 0,
           })}
         </p>
-        <button
-          onClick={() =>
-            setEditedProduct({
-              id,
-              name,
-              image,
-              price,
-            })
-          }
-        >
-          Edit
-        </button>
-        <button>Beli</button>
+        <div>
+          <Button
+            variant="tonal"
+            onClick={() =>
+              setEditedProduct({
+                id,
+                name,
+                image,
+                price,
+              })
+            }
+          >
+            Edit
+          </Button>
+          <Button>Beli</Button>
+        </div>
       </section>
     </div>
   );
